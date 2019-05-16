@@ -3,9 +3,6 @@ import requests
 class ResponseError(Exception):
     pass
 
-class ValidationError(Exception):
-    pass
-
 def _url(path):
     return 'https://restful-booker.herokuapp.com' + path
 
@@ -39,7 +36,7 @@ def get_booking_ids(
 
     return [x['bookingid'] for x in response.json()]
 
-def get_booking(id):
+def get_booking_by_id(id):
     response = requests.get(_url("/booking/{}".format(id)))
 
     if response.status_code != 200:

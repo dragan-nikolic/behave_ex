@@ -8,7 +8,7 @@ def step_impl(context):
 @then(u'I should receive Mark\'s booking info')
 def step_impl(context):
     for booking_id in context.booking_ids:
-        booking_info = get_booking(booking_id)
-        if booking_info['firstname'] != context.user:
-            raise ValidationError(
-                "Incorrect user: {}".format(booking_info['firstname']))
+        booking_info = get_booking_by_id(booking_id)
+        assert\
+            booking_info['firstname'] == context.user,\
+            "Got info for incorrect user: {}!".format(booking_info['firstname'])
