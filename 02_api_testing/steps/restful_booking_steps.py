@@ -15,9 +15,15 @@ def step_impl(context):
 
 @when(u'I add new booking')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I add new booking')
-
+    context.booking = generate_fake_booking()
+    response = create_booking(context.booking)
+    context.booking_id = response['bookingid']
 
 @then(u'I should see new booking in the list')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should see new booking in the list')
+    booking = get_booking_by_id(context.booking_id)
+
+    validate(
+        booking == context.booking,
+        "Could not find just generated booking!\n"
+            "Expected: {}\nActual: {}".format(context.booking, booking))
